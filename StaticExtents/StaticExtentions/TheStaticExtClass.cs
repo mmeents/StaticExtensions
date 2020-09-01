@@ -2,6 +2,9 @@
 using System.IO;
 using System.Globalization;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace StaticExtentions {
 
@@ -35,6 +38,10 @@ namespace StaticExtentions {
         return -1;
       }
     }
+    public static DateTime toDateTime(this object aObj) {
+      DateTime aOut = Convert.ToDateTime(aObj);
+      return aOut;
+    }
 
     #region Parse strings
     public static int ParseCount(this string content, string delims){
@@ -43,6 +50,12 @@ namespace StaticExtentions {
     public static string ParseString(this string content, string delims, int take){
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       return (take >= split.Length ? "" : split[take]);
+    }
+    public static string ParseFirst(this string content, string delims) {
+      return content.ParseString(delims, 0);
+    }
+    public static string ParseLast(this string content, string delims) {
+      return content.ParseString(delims, content.ParseCount(delims) - 1);
     }
     #endregion 
 
@@ -229,7 +242,19 @@ namespace StaticExtentions {
       using (var stream = File.OpenRead(filePath))
         return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
     }
-    
+
+    private static Regex r = new Regex(":");
+
+    //retrieves the datetime WITHOUT loading the whole image
+    public static DateTime GetDateTakenFromImage(this string path) {
+      using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+      using (Image myImage = Image.FromStream(fs, false, false)) {
+        PropertyItem propItem = myImage.GetPropertyItem(36867);
+        string dateTaken = r.Replace(System.Text.Encoding.UTF8.GetString(propItem.Value), "-", 2);
+        return DateTime.Parse(dateTaken);
+      }
+    }
+
   }
 
 }
