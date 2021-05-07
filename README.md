@@ -1,2 +1,2 @@
-# MMExts
-One Extension for all to use
+# StaticExtensions
+- Extensions for all
