@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
-namespace StaticExtentions {
+namespace StaticExtensions {
 
   public static class DllExt {
 

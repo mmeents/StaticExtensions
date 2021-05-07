@@ -7,8 +7,8 @@
     <ProjectGuid>{092C6ABA-9135-4319-A885-F89E7F4ADE93}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StaticExtentions</RootNamespace>
-    <AssemblyName>StaticExtentions</AssemblyName>
+    <RootNamespace>StaticExtensions</RootNamespace>
+    <AssemblyName>StaticExtensions</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

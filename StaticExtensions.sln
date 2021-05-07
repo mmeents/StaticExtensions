@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1169
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticExtentions", "StaticExtentions.csproj", "{092C6ABA-9135-4319-A885-F89E7F4ADE93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticExtensions", "StaticExtensions.csproj", "{092C6ABA-9135-4319-A885-F89E7F4ADE93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("StaticExtentions")]
+[assembly: AssemblyTitle("StaticExtensions")]
 [assembly: AssemblyDescription("Library of common exts")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MMCommon")]
-[assembly: AssemblyProduct("StaticExtentions")]
+[assembly: AssemblyProduct("StaticExtensions")]
 [assembly: AssemblyCopyright("Copyright © 2020 MMCommon")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
