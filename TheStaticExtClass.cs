@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace StaticExtensions {
 
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
   public static class DllExt {
 
     #region Common Locations 
@@ -26,33 +27,19 @@ namespace StaticExtensions {
 
     #region object exts
     public static Boolean isNull(this object aObj){
-      Boolean isItNull = (aObj == null);
-      if (!isItNull) {
-        isItNull = Convert.IsDBNull(aObj);
-      }
-      return isItNull;
+      return (aObj == null) || Convert.IsDBNull(aObj);
     }
     public static bool toBoolean(this object aObj){
-      if (!aObj.isNull()) {
-        return Convert.ToBoolean(aObj);
-      } else {
-        return false;
-      }
+      return !aObj.isNull() && Convert.ToBoolean(aObj);      
     }
     public static string toString(this object aObj){
       return Convert.ToString(aObj);
     }
     public static Int32 toInt32(this object aObj){
-      Int32 r = -1;
-      if (Int32.TryParse(aObj.toString(), out r)) {
-        return r;
-      } else {
-        return -1;
-      }
+      return int.TryParse(aObj.toString(), out int r) ? r : -1;
     }
     public static DateTime toDateTime(this object aObj) {
-      DateTime aOut = Convert.ToDateTime(aObj);
-      return aOut;
+      return Convert.ToDateTime(aObj);
     }
     public static Double toDouble(this object aObj) { 
       return Convert.ToDouble(aObj);  
@@ -68,7 +55,7 @@ namespace StaticExtensions {
     }
     public static string ParseString(this string content, string delims, int take){
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-      return (take >= split.Length ? "" : split[take]);
+      return take >= split.Length ? "" : split[take];
     }
     public static string ParseFirst(this string content, string delims) {
       return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
@@ -76,7 +63,6 @@ namespace StaticExtensions {
     public static string ParseLast(this string content, string delims) {
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       return split[split.Length-1];
-      //return content.ParseString(delims, content.ParseCount(delims) - 1);
     }
 
     public static string ParseReverse(this string content, string delims, string concatString) {
@@ -87,68 +73,54 @@ namespace StaticExtensions {
 
     #region Date to string 
     public static string toStrDate(this DateTime x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", x);
     }
     public static string toStrDateTime(this DateTime x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd hh:mm:ss.FFF tt}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd hh:mm:ss.FFF tt}", x);
     }
     public static string toStrTime(this DateTime x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{hh:mm:ss}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:h:mm:ss tt}", x);
     }
     public static string ToStrDateMM(this DateTime x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:MM/dd/yyyy hh:mm}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:MM/dd/yyyy hh:mm}", x);
     }
     public static string toStrDay(this DateTime x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:MM/dd/yyyy}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:MM/dd/yyyy}", x);
     }
     #endregion
 
     #region Double
 
     public static Int32 toInt32(this double x){
-      Int32 y = Convert.ToInt32(x);  // rounds
-      return y;
+      return Convert.ToInt32(x);
     }
 
     public static Int32 toInt32T(this double x){
-      Int32 y = Convert.ToInt32(x.toStr2().ParseString(".", 0));
-      return y;
+      return Convert.ToInt32(x.toStr2().ParseString(".", 0));
     }
 
     public static string toStr2(this double x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x);
     }
     public static string toStr2P(this double x, Int32 iDigitToPad){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x).PadLeft(iDigitToPad, ' ');
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x).PadLeft(iDigitToPad, ' ');
     }
     public static string toStr4(this double x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x);
     }
     public static string toStr4P(this double x, Int32 iDigitToPad){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x).PadLeft(iDigitToPad, ' ');
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x).PadLeft(iDigitToPad, ' ');
     }
     public static string toStr8(this double x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x);
     }
 
     public static string toStr8P(this double x, Int32 iDigitToPad){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x).PadLeft(iDigitToPad, ' ');
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x).PadLeft(iDigitToPad, ' ');
     }
 
     public static decimal toDecimal(this double x){
-      decimal y = Convert.ToDecimal(x);
-      return y;
+      return Convert.ToDecimal(x);
     }
 
     public static double toPointsVertical(this double dIn){
@@ -166,45 +138,37 @@ namespace StaticExtensions {
       return Convert.ToSingle(x);
     }
 
-    public static Int32 toInt32(this decimal x){
-      Int32 y = Convert.ToInt32(x);
-      return y;
+    public static Int32 toInt32(this decimal x){      
+      return Convert.ToInt32(x);;
     }
 
     public static Int32 toInt32T(this decimal x){
-      Int32 y = Convert.ToInt32(x.toStr2().ParseString(".", 0));
-      return y;
+      return  Convert.ToInt32(x.toStr2().ParseString(".", 0));
     }
 
     public static string toStr2(this decimal x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x);
     }
     public static string toStr2P(this decimal x, Int32 iDigitToPad){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x).PadLeft(iDigitToPad, ' ');
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x).PadLeft(iDigitToPad, ' ');
     }
-    public static string toStr4(this decimal x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x);
-      return y;
+    public static string toStr4(this decimal x){      
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x);
     }
     public static string toStr4P(this decimal x, Int32 iDigitToPad){
       string y = String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x).PadLeft(iDigitToPad, ' ');
       return y;
     }
     public static string toStr8(this decimal x){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x);
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x);
     }
 
     public static string toStr8P(this decimal x, Int32 iDigitToPad){
-      string y = String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x).PadLeft(iDigitToPad, ' ');
-      return y;
+      return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x).PadLeft(iDigitToPad, ' ');
     }
 
     public static double toDouble(this decimal x){
-      double y = Convert.ToDouble(x);
-      return y;
+      return Convert.ToDouble(x);
     }
 
     #endregion
@@ -288,7 +252,7 @@ namespace StaticExtensions {
     }
     public static Exception toLogException(this Exception e, string sLogName){
       try {
-        string ToFile = AppExeFolder() + "CObjectLog" + DateTime.Now.toStrDate().Trim() + ".log";
+        string ToFile = AppExeFolder() + sLogName + DateTime.Now.toStrDate().Trim() + ".log";
         e.toWalkExcTreePath().toTextFileLine(ToFile);
       } catch { }
       return e;
@@ -309,8 +273,7 @@ namespace StaticExtensions {
     }
     // GetColors by Matt Meents, creates const foreach ARGB and then sum out the colors...
     public static Color[] GetColors(Color A, Color B, int HowMany) {
-      List<Color> aRet = new List<Color>();
-      aRet.Add(A);
+      List<Color> aRet = new List<Color> {A};
       if (HowMany > 0) {
         Int32 iCount = 0;        
         int sA = (B.A - A.A) / (HowMany + 1);
