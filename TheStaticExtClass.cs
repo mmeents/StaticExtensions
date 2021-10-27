@@ -11,11 +11,17 @@ using System.Windows.Forms;
 namespace StaticExtensions {
 
   [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+
   public static class DllExt {
 
     #region Common Locations 
+    /// <summary> General Location to put program data  </summary>
+    /// <remarks> C:\ProgramData\MMCommons </remarks>
     public static string MMCommonsFolder() { return "C:\\ProgramData\\MMCommons"; }
     public static string AppExeFolder(){ return MMConLocation() + "\\"; }
+
+    /// <summary> Common location for apps to store program data based on Application.CommonAppDataPath </summary>
+    /// <returns> Path to MMCommons folder </returns>
     public static string MMConLocation() {
       string sCommon = Application.CommonAppDataPath;
       sCommon = sCommon.Substring(0, sCommon.LastIndexOf('\\'));
@@ -36,8 +42,13 @@ namespace StaticExtensions {
       return Convert.ToString(aObj);
     }
     public static Int32 toInt32(this object aObj){
-      return int.TryParse(aObj.toString(), out int r) ? r : -1;
+      return int.TryParse(aObj.toString(), out int r) ? r : throw new Exception("failed convert to int " + aObj.toString());
     }
+    public static Int64 toInt64(this object aObj) {
+      return long.TryParse(aObj.toString(), out long r) ? r : throw new Exception("failed convert to long "+ aObj.toString());
+    }
+
+
     public static DateTime toDateTime(this object aObj) {
       return Convert.ToDateTime(aObj);
     }
@@ -63,6 +74,12 @@ namespace StaticExtensions {
     public static string ParseLast(this string content, string delims) {
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       return split[split.Length-1];
+    }
+
+    public static Decimal toDecimal(this string aObj) {
+      //decimal r ;
+      return (Decimal.TryParse(aObj, out decimal r) ? r : throw new Exception("Failed to parse "+aObj));
+      
     }
 
     public static string ParseReverse(this string content, string delims, string concatString) {
@@ -139,7 +156,7 @@ namespace StaticExtensions {
     }
 
     public static Int32 toInt32(this decimal x){      
-      return Convert.ToInt32(x);;
+      return Convert.ToInt32(x);
     }
 
     public static Int32 toInt32T(this decimal x){
@@ -174,11 +191,12 @@ namespace StaticExtensions {
     #endregion
 
     #region cryptish masks 
-    // variant uses ? as fillers instead of = for base64 in inifiles.
+    /// <summary> Base 64 encodes string variant uses ? as fillers instead of = for inifiles. </summary>
     public static string toBase64EncryptStr(this string Text){
       byte[] encBuff = System.Text.Encoding.UTF8.GetBytes(Text);
       return Convert.ToBase64String(encBuff).Replace('=', '?');
     }
+    /// <summary> Base 64 decodes string variant uses ? as fillers instead of = for inifiles. </summary>
     public static string toBase64DecryptStr(this string Text){
       byte[] decbuff = Convert.FromBase64String(Text.Replace('?', '='));
       string s = System.Text.Encoding.UTF8.GetString(decbuff);
@@ -262,7 +280,11 @@ namespace StaticExtensions {
 
     #region Images
     public static Regex r = new Regex(":");
-    //retrieves the datetime WITHOUT loading the whole image
+    /// <summary>
+    /// Retrieves the datetime without loading the whole image
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns>DateTime</returns>
     public static DateTime GetDateTakenFromImage(this string path) {
       using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
       using (Image myImage = Image.FromStream(fs, false, false)) {
@@ -271,7 +293,10 @@ namespace StaticExtensions {
         return DateTime.Parse(dateTaken);
       }
     }
-    // GetColors by Matt Meents, creates const foreach ARGB and then sum out the colors...
+    /// <summary>
+    /// GetColors by Matt Meents, creates const foreach ARGB and then sum out the colors...
+    /// </summary>
+    /// <returns>Array of colors with HowMany in between A and B </returns>
     public static Color[] GetColors(Color A, Color B, int HowMany) {
       List<Color> aRet = new List<Color> {A};
       if (HowMany > 0) {
