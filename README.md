@@ -16,8 +16,6 @@
     public static Double toDouble(this object aObj)
     public static Decimal toDecimal(this object aObj)
 
-    #endregion
-
     #region Parse strings
     
     public static int ParseCount(this string content, string delims)
@@ -26,8 +24,6 @@
     public static string ParseLast(this string content, string delims)
     public static string ParseReverse(this string content, string delims, string concatString)
 
-    #endregion 
-
     #region Date to string with popular time formats. 
     
     public static string toStrDate(this DateTime x)
@@ -35,8 +31,6 @@
     public static string toStrTime(this DateTime x)
     public static string ToStrDateMM(this DateTime x)
     public static string toStrDay(this DateTime x)
-
-    #endregion
 
     #region Double
 
@@ -52,8 +46,6 @@
     public static double toPointsVertical(this double dIn)
     public static double toPointsHorizontal(this double dIn)
 
-    #endregion
-
     #region Decimal
     
     public static float toFloat(this decimal x) 
@@ -67,8 +59,6 @@
     public static string toStr8P(this decimal x, Int32 iDigitToPad)
     public static double toDouble(this decimal x)
 
-    #endregion
-
     #region cryptish masks 
     
     // variant uses ? as fillers instead of = for base64 in inifiles.
@@ -80,8 +70,6 @@
     public static byte[] toByteArray(this string hexString)
     public static string toFiletoMD5(string filePath) 
 
-    #endregion
-
     #region exceptions
     
     public static string toWalkExcTreePath(this Exception e)   
@@ -90,8 +78,6 @@
     public static string toTextFile(this string sMsg, string sLogFileName)
     public static string toTextFileLine(this string sMsg, string sLogFileName)
     public static Exception toLogException(this Exception e, string sLogName)
-
-    #endregion
 
     #region Images
 
