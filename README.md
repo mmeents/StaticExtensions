@@ -1,6 +1,6 @@
 # StaticExtensions
 - Extensions for all
-
+```c#
      
     public static string AppExeFolder(){ return MMConLocation() + "\\"; }
     public static string MMConLocation()  -- wrapper around Application.CommonAppDataPath backing up and adding "MMCommons";
@@ -104,3 +104,4 @@
     public static Color[] GetColors(Color A, Color B, int HowMany)
 
     #endregion
+```
