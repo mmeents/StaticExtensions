@@ -45,5 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TheStaticExtClass.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
