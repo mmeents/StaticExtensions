@@ -29,6 +29,11 @@ namespace StaticExtensions {
       sCommon = sCommon.Substring(0, sCommon.LastIndexOf('\\') + 1);
       return sCommon + "MMCommons";
     }
+
+    public static Boolean HasConsole() {
+      try { return Console.WindowHeight > 0; }
+      catch { return false;}
+    }
     #endregion
 
     #region object exts
@@ -60,7 +65,7 @@ namespace StaticExtensions {
     }
     #endregion
 
-    #region Parse strings
+    #region Strings
     public static int ParseCount(this string content, string delims){
       return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Length;
     }
@@ -76,6 +81,21 @@ namespace StaticExtensions {
       return split[split.Length-1];
     }
 
+    public static string AddQuotes(this string content) { 
+      return "\""+content+ "\"";
+    }
+    public static string AddQuote(this string content) {
+      return "'" + content + "'";
+    }
+
+    public static string RemoveChar(this string content, char CToRemove) { 
+      string r = content;
+      while (r.IndexOf(CToRemove)>=0) { 
+        r =  r.Remove(r.IndexOf(CToRemove), 1);  
+      }
+      return r;
+    }
+
     public static Decimal toDecimal(this string aObj) {
       //decimal r ;
       return (Decimal.TryParse(aObj, out decimal r) ? r : throw new Exception("Failed to parse "+aObj));
@@ -85,6 +105,14 @@ namespace StaticExtensions {
     public static string ParseReverse(this string content, string delims, string concatString) {
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       return split[split.Length-1] + concatString +split[0];
+    }
+
+    public static string LTrim(this string content, char c) { 
+      string r = content;
+      while((r.Length > 0)&&(r[0]==c)) { 
+        r = r.Remove(0,1); 
+      }
+      return r;
     }
     #endregion 
 
