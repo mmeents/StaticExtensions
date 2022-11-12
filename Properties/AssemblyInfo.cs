@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("StaticExtensions")]
 [assembly: AssemblyDescription("Library of common exts")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("MMCommon")]
+[assembly: AssemblyCompany("Sky High Productions, LLC")]
 [assembly: AssemblyProduct("StaticExtensions")]
-[assembly: AssemblyCopyright("Copyright © 2020 MMCommon")]
+[assembly: AssemblyCopyright("Copyright © 2022 Sky High Productions, LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.2")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
