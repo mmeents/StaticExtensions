@@ -2,16 +2,16 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
+    <version>1.0.2</version>
+    <title>StaticExtensions</title>
+    <authors>Sky High Productions, LLC</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>icon.png</icon> -->
     <projectUrl>https://github.com/mmeents/StaticExtensions/</projectUrl>
-    <description>$description$</description>
+    <description>Greatest Library of common exts</description>
     <releaseNotes>Initial Release.</releaseNotes>
-    <copyright>$copyright$</copyright>
-    <tags>Extenstion Library</tags>
+    <copyright>Copyright © 2022 Sky High Productions, LLC</copyright>
+    <tags>c# Extenstion Library</tags>
   </metadata>
 </package>

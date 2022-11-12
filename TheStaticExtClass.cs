@@ -17,12 +17,14 @@ namespace StaticExtensions {
 
     #region Common Locations 
     /// <summary> General Location to put program data  </summary>
-    /// <remarks> C:\ProgramData\MMCommons </remarks>
+    /// <remarks> string C:\ProgramData\MMCommons </remarks>
     public static string MMCommonsFolder() { return "C:\\ProgramData\\MMCommons"; }
+    /// <summary> General Location to put program data  </summary>
+    /// <remarks> string C:\ProgramData\MMCommons\ via MMConLocation </remarks>
     public static string AppExeFolder(){ return MMConLocation() + "\\"; }
 
     /// <summary> Common location for apps to store program data based on Application.CommonAppDataPath </summary>
-    /// <returns> Path to MMCommons folder </returns>
+    /// <returns> string C:\ProgramData\MMCommons Path to MMCommons folder </returns>
     public static string MMConLocation() {
       string sCommon = Application.CommonAppDataPath;
       sCommon = sCommon.Substring(0, sCommon.LastIndexOf('\\'));
@@ -31,44 +33,73 @@ namespace StaticExtensions {
       return sCommon + "MMCommons";
     }
 
-    public static Boolean HasConsole() {
+    /// <summary> Attempts to check WindowHeight > 0 catches any errors </summary>
+    /// <returns> bool </returns>
+    public static bool HasConsole() {
       try { return Console.WindowHeight > 0; }
       catch { return false;}
     }
     #endregion
 
     #region object exts
+    /// <summary> Check object is null </summary>
+    /// <returns> bool </returns>
     public static bool IsNull(this object obj){ return (obj == null) || Convert.IsDBNull(obj); }
+    /// <summary> Casts object as bool, null is false </summary>
+    /// <returns> bool </returns>
     public static bool AsBool(this object obj){ return !obj.IsNull() && Convert.ToBoolean(obj); }
+    /// <summary> Casts object as string, null is Exception </summary>
+    /// <returns> string </returns>
     public static string AsString(this object obj){ return Convert.ToString(obj); }
+    /// <summary> Casts object as int, null is Exception </summary>
+    /// <returns> int </returns>
     public static int AsInt(this object obj){
       return int.TryParse(obj.AsString(), out int r) ? r : throw new Exception("failed convert to int " + obj.AsString());
     }
+    /// <summary> Casts object as long, null is Exception </summary>
+    /// <returns> long </returns>
     public static long AsLong(this object obj) {
       return long.TryParse(obj.AsString(), out long r) ? r : throw new Exception("failed convert to long "+ obj.AsString());
     }
-
+    /// <summary> Casts object as DateTime, null is Exception </summary>
+    /// <returns> DateTime </returns>    
     public static DateTime AsDateTime(this object obj) { return Convert.ToDateTime(obj); }
-    public static Double AsDouble(this object obj) { return Convert.ToDouble(obj); }
-    public static Decimal AsDecimal(this object obj) { return Convert.ToDecimal(obj); }
+    /// <summary> Casts object as double, null is Exception </summary>
+    /// <returns> double </returns>    
+    public static double AsDouble(this object obj) { return Convert.ToDouble(obj); }
+    /// <summary> Casts object as decimal, null is Exception </summary>
+    /// <returns> decimal </returns>    
+    public static decimal AsDecimal(this object obj) { return Convert.ToDecimal(obj); }
+    /// <summary> Casts object as json string via Newtonsoft </summary>
+    /// <returns> string </returns>    
     public static string AsJson(this object obj) { return JsonConvert.SerializeObject(obj); }
     #endregion
 
     #region Strings
+    /// <summary> Splits content by delims and count</summary>
+    /// <returns> int </returns>    
     public static int ParseCount(this string content, string delims){
       return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Length;
     }
+    /// <summary> Splits contents by delims into an array and returns item at take </summary>
+    /// <returns> string </returns>
     public static string ParseString(this string content, string delims, int take){
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       return take >= split.Length ? "" : split[take];
     }
+    /// <summary> Splits contents by delims and takes first</summary>
+    /// <returns> string </returns>
     public static string ParseFirst(this string content, string delims) {
       return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
     }
+    /// <summary> Splits contents by delims and takes last</summary>
+    /// <returns> string </returns>
     public static string ParseLast(this string content, string delims) {
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       return split[split.Length-1];
     }
+    /// <summary> Splits contents by delims and concats adding concatString in middle in reverse order</summary>
+    /// <returns> string </returns>
     public static string ParseReverse(this string content, string delims, string concatString) {
       string result = "";
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -78,9 +109,14 @@ namespace StaticExtensions {
       return result;
     }
 
+    /// <summary> Adds Double Quotes around content</summary>
+    /// <returns> string </returns>
     public static string AddQuotes(this string content) { return "\""+content+ "\"";  }
+    /// <summary> Adds Single Quotes around content</summary>
+    /// <returns> string </returns>
     public static string AddQuote(this string content) { return "'" + content + "'";  }
-
+    /// <summary> Remove all instances of CToRemove from content</summary>
+    /// <returns> string </returns>
     public static string RemoveChar(this string content, char CToRemove) { 
       string r = content;
       while (r.IndexOf(CToRemove)>=0) { 
@@ -88,9 +124,13 @@ namespace StaticExtensions {
       }
       return r;
     }
+    /// <summary> Converts String to decimal</summary>
+    /// <returns> decimal </returns>
     public static decimal AsDecimal(this string obj) {      
       return (decimal.TryParse(obj, out decimal r) ? r : throw new Exception("Failed to parse "+obj));      
     }
+    /// <summary> Removes all char c from content[0]</summary>
+    /// <returns> string </returns>
     public static string LTrim(this string content, char c) { 
       string r = content;
       while((r.Length > 0)&&(r[0]==c)) { 
@@ -98,99 +138,143 @@ namespace StaticExtensions {
       }
       return r;
     }
-    #endregion 
+
+    #endregion
 
     #region Date to string 
+    /// <summary> Day to string Sortable yyyy-MM-dd</summary>
+    /// <returns> string </returns>
     public static string AsStrDate(this DateTime x){
       return String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd}", x);
     }
+    /// <summary> DateTime to string yyyy-MM-dd hh:mm:ss.FFF tt </summary>
+    /// <returns> string </returns>
     public static string AsStrDateTime12H(this DateTime x){
       return String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd hh:mm:ss.FFF tt}", x);
     }
+    /// <summary> DateTime to string yyyy-MM-dd HH:mm:ss.FFF</summary>
+    /// <returns> string </returns>
     public static string AsStrDateTime24H(this DateTime x) {
       return String.Format(CultureInfo.InvariantCulture, "{0:yyyy-MM-dd HH:mm:ss.FFF}", x);
     }
+    /// <summary> DateTime to string time h:mm:ss tt</summary>
+    /// <returns> string </returns>
     public static string AsStrTime(this DateTime x){
       return String.Format(CultureInfo.InvariantCulture, "{0:h:mm:ss tt}", x);
     }
+    /// <summary> DateTime to string Day Time MM/dd/yyyy hh:mm</summary>
+    /// <returns> string </returns>
     public static string AsStrDayHHMM(this DateTime x){
       return String.Format(CultureInfo.InvariantCulture, "{0:MM/dd/yyyy hh:mm}", x);
     }
+    /// <summary> DateTime to string Day MM/dd/yyyy</summary>
+    /// <returns> string </returns>
     public static string AsStrDay(this DateTime x){
       return String.Format(CultureInfo.InvariantCulture, "{0:MM/dd/yyyy}", x);
     }
+
     #endregion
 
     #region Double
-
+    /// <summary> Convert double to int via Convert</summary>
+    /// <returns> int </returns>
     public static int AsInt(this double x){
       return Convert.ToInt32(x);
     }
-
+    /// <summary> Convert double to int via cast to string and cast trunc string to int. </summary>
+    /// <returns> int </returns>
     public static int AsIntT(this double x){
       return Convert.ToInt32(x.AsStr2P().ParseString(".", 0));
     }
-
+    /// <summary> Cast double to 2 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr2P(this double x){
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x);
     }
+    /// <summary> Cast double to 2 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr2P(this double x, int toHowManyPlaces, char paddingChar = ' ') {
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x).PadLeft(toHowManyPlaces, paddingChar);
     }
+    /// <summary> Cast double to 4 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr4P(this double x){
       return String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x);
     }
+    /// <summary> Cast double to 4 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr4P(this double x, int toHowManyPlaces, char paddingChar = ' ') {
       return String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x).PadLeft(toHowManyPlaces, paddingChar);
     }
+    /// <summary> Cast double to 8 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr8P(this double x){
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x);
     }
+    /// <summary> Cast double to 8 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
 
     public static string AsStr8P(this double x, int toHowManyPlaces, char paddingChar = ' ') {
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x).PadLeft(toHowManyPlaces, paddingChar);
     }
-        
+    /// <summary> Common constant when converting pixels to points</summary>
+    /// <returns> double </returns>    
     public static double AsPointsVertical(this double dIn){ return (dIn * 72); }
-
+    /// <summary> Common constant when converting pixels to points</summary>
+    /// <returns> double </returns>
     public static double AsPointsHorizontal(this double dIn){ return (dIn * 9.72); }
 
     #endregion
 
     #region Decimal 
+    /// <summary> Converts decimal to float </summary>
+    /// <returns> float </returns>
     public static float AsFloat(this decimal x) { 
       return Convert.ToSingle(x);
     }
-
+    /// <summary> Cast decimal to int via Convert</summary>
+    /// <returns> int </returns>
     public static int AsInt(this decimal x){      
       return Convert.ToInt32(x);
     }
-
+    /// <summary> Cast decimal to int via covert to string and cast trunc string to int </summary>
+    /// <returns> int </returns>
     public static int AsIntT(this decimal x){
       return  Convert.ToInt32(x.AsStr2P().ParseString(".", 0));
     }
-
+    /// <summary> Cast double to 2 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr2P(this decimal x){
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x);
     }
+    /// <summary> Cast double to 2 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr2P(this decimal x, int toHowManyPlaces, char paddingChar = ' '){
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00}", x).PadLeft(toHowManyPlaces, paddingChar);
     }
+    /// <summary> Cast double to 4 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr4P(this decimal x){      
       return String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x);
     }
+    /// <summary> Cast double to 4 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr4P(this decimal x, int toHowManyPlaces, char paddingChar = ' ') {
       string y = String.Format(CultureInfo.InvariantCulture, "{0:0.0000}", x).PadLeft(toHowManyPlaces, paddingChar);
       return y;
     }
+    /// <summary> Cast double to 8 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr8P(this decimal x){
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x);
     }
-
+    /// <summary> Cast double to 8 decimal places, optional pad toHowManyPlace, optional paddingChar default ' '</summary>
+    /// <returns> string </returns>
     public static string AsStr8P(this decimal x, int toHowManyPlaces, char paddingChar = ' ') {
       return String.Format(CultureInfo.InvariantCulture, "{0:0.00000000}", x).PadLeft(toHowManyPlaces, paddingChar);
     }
-
+    /// <summary> Convert decimal to double </summary>
+    /// <returns> string </returns>
     public static double AsDouble(this decimal x){
       return Convert.ToDouble(x);
     }
@@ -199,31 +283,36 @@ namespace StaticExtensions {
 
     #region cryptish masks 
     /// <summary> Base 64 encodes string variant uses ? as fillers instead of = for inifiles. </summary>
+    /// <returns> Base64 encoded string </returns>
     public static string AsBase64Encoded(this string Text){
       byte[] encBuff = System.Text.Encoding.UTF8.GetBytes(Text);
       return Convert.ToBase64String(encBuff).Replace('=', '?');
     }
-    /// <summary> Base 64 decodes string variant uses ? as fillers instead of = for inifiles. </summary>
+    /// <summary> Base 64 decodes string variant uses converts ? back to = as fillers for inifiles. </summary>
+    /// <returns> Base 64 decoded string </returns>
     public static string AsBase64Decoded(this string Text){
       byte[] decbuff = Convert.FromBase64String(Text.Replace('?', '='));
       string s = System.Text.Encoding.UTF8.GetString(decbuff);
       return s;
     }
-    
+    /// <summary> Converts Byte Array to Hex String, useful for saving byte[] to string and back via AsByteArray </summary>
+    /// <returns> Hex string </returns>    
     public static string AsHexStr(this byte[] byteArray) {
       string outString = "";
       foreach (Byte b in byteArray)
         outString += b.ToString("X2");
       return outString;
     }
-
+    /// <summary> Converts Hex String created by AsHexStr back into Byte Array </summary>
+    /// <returns> byte[] </returns>    
     public static byte[] AsByteArray(this string hexString) {
       byte[] returnBytes = new byte[hexString.Length / 2];
       for (int i = 0; i < returnBytes.Length; i++)
         returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
       return returnBytes;
     }
-
+    /// <summary> Computes hash for file at filePath </summary>
+    /// <returns> string Hash </returns>    
     public static string AsMD5HashFile(string filePath) {
       using (var md5 = MD5.Create())
       using (var stream = File.OpenRead(filePath))
@@ -233,6 +322,8 @@ namespace StaticExtensions {
     #endregion
 
     #region exceptions
+    /// <summary> Recursive sum of error messages via error.InnerException </summary>
+    /// <returns> string </returns>    
     public static string AsWalkExcTreePath(this Exception e) {
       string sThisExcStr = "e.Msg:" + e.Message ;
       if (e.InnerException != null) {
@@ -240,21 +331,25 @@ namespace StaticExtensions {
       }
       return sThisExcStr;
     }
-   
+    /// <summary> Writes to daily DllExtLog[date].log file messageString and exception chain. </summary>
+    /// <returns> Exception for chaining </returns>    
     public static Exception WriteToAppLog(this Exception e, string messageString) {
       try {
-        string ToFile = AppExeFolder() + "MMExtLog" + DateTime.Now.AsStrDate().Trim() + ".log";
+        string ToFile = AppExeFolder() + "DllExtLog" + DateTime.Now.AsStrDate().Trim() + ".log";
         (DateTime.Now.AsStrDateTime12H() + ":" + messageString + ":" + e.AsWalkExcTreePath()).WriteToTextFileLine(ToFile);
       } catch { }
       return e;
     }
+    /// <summary> WriteLine to daily DllExtLog[date].log file messageString </summary>
+    /// <returns> none void </returns>    
     public static void WriteAppLog(this string messageString){
       try {
-        string ToFile = AppExeFolder() + "MMExtLog" + DateTime.Now.AsStrDate().Trim() + ".log";
+        string ToFile = AppExeFolder() + "DllExtLog" + DateTime.Now.AsStrDate().Trim() + ".log";
         (DateTime.Now.AsStrDateTime12H() + ":" + messageString).WriteToTextFileLine(ToFile);
       } catch { }
     }
-
+    /// <summary> WriteLine to daily DllExtLog[date].log file messageString </summary>
+    /// <returns> none void </returns>    
     public static string WriteToTextFile(this string stringToWrite, string logFileName){
       try {
         using (StreamWriter w = File.AppendText(logFileName)) { w.Write(stringToWrite); }
@@ -263,6 +358,8 @@ namespace StaticExtensions {
       }
       return stringToWrite;
     }
+    /// <summary> WriteLine to daily DllExtLog[date].log file messageString </summary>
+    /// <returns> none void </returns>    
     public static string WriteToTextFileLine(this string stringToWrites, string logFileName){
       try {
         using (StreamWriter w = File.AppendText(logFileName)) { w.WriteLine(stringToWrites); }
@@ -271,6 +368,8 @@ namespace StaticExtensions {
       }
       return stringToWrites;
     }
+    /// <summary> WriteLine to daily logFileNamePart[date].log file the Exception </summary>
+    /// <returns> the Exception for chaining </returns>    
     public static Exception WriteToLogException(this Exception e, string logFileNamePart){
       try {
         string ToFile = AppExeFolder() + logFileNamePart + DateTime.Now.AsStrDate().Trim() + ".log";
@@ -282,7 +381,9 @@ namespace StaticExtensions {
     #endregion
 
     #region Images
-    public static Regex r = new Regex(":");
+    /// <summary> Access to Regex object regex </summary>
+    /// <returns> Regex r </returns>    
+    public static Regex regex = new Regex(":");
     /// <summary>
     /// Retrieves the datetime without loading the whole image
     /// </summary>
@@ -292,14 +393,14 @@ namespace StaticExtensions {
       using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
       using (Image myImage = Image.FromStream(fs, false, false)) {
         PropertyItem propItem = myImage.GetPropertyItem(36867);
-        string dateTaken = r.Replace(System.Text.Encoding.UTF8.GetString(propItem.Value), "-", 2);
+        string dateTaken = regex.Replace(System.Text.Encoding.UTF8.GetString(propItem.Value), "-", 2);
         return DateTime.Parse(dateTaken);
       }
     }
     /// <summary>
-    /// GetColors by Matt Meents, creates const foreach ARGB and then sum out the colors...
+    /// GetColors, finds howMany colors inbetween fromColor and toColor 
     /// </summary>
-    /// <returns>Array of colors with HowMany in between A and B </returns>
+    /// <returns>Array howMany of colors in between fromColor and toColor </returns>
     public static Color[] GetColors(Color fromColor, Color toColor, int howMany) {
       List<Color> aRet = new List<Color> {fromColor};
       if (howMany > 0) {
