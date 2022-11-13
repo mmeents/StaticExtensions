@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace StaticExtensions {
 
@@ -71,8 +70,7 @@ namespace StaticExtensions {
     /// <returns> decimal </returns>    
     public static decimal AsDecimal(this object obj) { return Convert.ToDecimal(obj); }
     /// <summary> Casts object as json string via Newtonsoft </summary>
-    /// <returns> string </returns>    
-    public static string AsJson(this object obj) { return JsonConvert.SerializeObject(obj); }
+    /// <returns> string </returns>       
     #endregion
 
     #region Strings
