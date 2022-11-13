@@ -7,10 +7,6 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: "4.8.x"
     - name: Checkout
       uses: actions/checkout@v3    
     - name: Build
