@@ -9,11 +9,4 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3 
-    - name: Configure Nuget
-      uses: nuget/setup-nuget@v1
-      with:
-        nuget-api-key: ${{ secrets.NuGetAPIKey }}
-        nuget-version: '5.x'
-    - run: nuget restore StaticExtensions.sln
     - run: dotnet build --configuration Release
-    - run: dotnet test --configuration Release --no-build
