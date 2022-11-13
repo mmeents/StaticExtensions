@@ -15,7 +15,6 @@ jobs:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: '5.x'
     - run: nuget restore StaticExtensions.sln
-    - name: Build
-      run: dotnet build --configuration Release
+    - run: dotnet build --configuration Release
     - name: Test
       run: dotnet test --configuration Release --no-build
