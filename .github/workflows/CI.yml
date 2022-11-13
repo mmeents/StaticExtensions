@@ -7,14 +7,12 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Configure Nuget
-      uses: nuget/setup-nuget@v1
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
       with:
-        nuget-api-key: ${{ secrets.NuGetAPIKey }}
-        nuget-version: '5.x'
-    - run: nuget restore StaticExtensions.sln
+        dotnet-version: "4.8.x"
+    - name: Checkout
+      uses: actions/checkout@v3    
     - name: Build
       run: dotnet build --configuration Release
     - name: Test
