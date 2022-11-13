@@ -16,5 +16,4 @@ jobs:
         nuget-version: '5.x'
     - run: nuget restore StaticExtensions.sln
     - run: dotnet build --configuration Release
-    - name: Test
-      run: dotnet test --configuration Release --no-build
+    - run: dotnet test --configuration Release --no-build
