@@ -12,9 +12,9 @@
     <PackageTags>Static Extension Libary C#</PackageTags>    
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>    
-    <GenerateAssemblyFileVersionAttribute>True</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>True</GenerateAssemblyInformationalVersionAttribute>
-    <GenerateAssemblyVersionAttribute>True</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>False</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>False</GenerateAssemblyInformationalVersionAttribute>
+    <GenerateAssemblyVersionAttribute>False</GenerateAssemblyVersionAttribute>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
