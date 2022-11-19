@@ -8,7 +8,7 @@
     <Company>$(Authors)</Company>
     <Copyright>Copyright © 2022 Sky High Productions, LLC</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/mmeents/StaticExtensions/tree/V2Sprint01</RepositoryUrl>
+    <RepositoryUrl>https://github.com/mmeents/StaticExtensions</RepositoryUrl>
     <PackageTags>Static Extension Libary C#</PackageTags>    
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>    
