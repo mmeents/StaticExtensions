@@ -50,8 +50,8 @@ namespace StaticExtensions {
       try{ return Convert.ToString(obj) ?? String.Empty; } catch{ return String.Empty; } }
     /// <summary> Casts object as int, null is Exception </summary>
     /// <returns> int </returns>
-    public static int AsInt(this object obj){
-      return int.TryParse(obj.AsString(), out int r) ? r : throw new Exception("failed convert to int " + obj.AsString());
+    public static int? AsInt(this object obj){
+      return int.TryParse(obj.AsString(), out int r) ? r : null;
     }
     /// <summary> Casts object as long, null is Exception </summary>
     /// <returns> long </returns>
