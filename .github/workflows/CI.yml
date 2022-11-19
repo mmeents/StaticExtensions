@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - V2Sprint01
+    - Develop
 jobs:
   build:
     runs-on: ubuntu-latest
