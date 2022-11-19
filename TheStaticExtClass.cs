@@ -1,17 +1,15 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 
 namespace StaticExtensions {
 
-  //[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
-
+  
+  /// <summary>
+  /// Common static extension library class DLLExt
+  /// </summary>
   public static class DllExt {
 
     #region Common Locations 
@@ -21,14 +19,13 @@ namespace StaticExtensions {
     /// <summary> General Location to put program data  </summary>
     /// <remarks> string C:\ProgramData\MMCommons\ via MMConLocation </remarks>
     public static string AppExeFolder(){ return MMConLocation() + "\\"; }
-
     /// <summary> Common location for apps to store program data based on Application.CommonAppDataPath </summary>
     /// <returns> string C:\ProgramData\MMCommons Path to MMCommons folder </returns>
-    public static string MMConLocation() {
-      string sCommon = Application.CommonAppDataPath;
-      sCommon = sCommon.Substring(0, sCommon.LastIndexOf('\\'));
-      sCommon = sCommon.Substring(0, sCommon.LastIndexOf('\\'));
-      sCommon = sCommon.Substring(0, sCommon.LastIndexOf('\\') + 1);
+    public static string MMConLocation() {      
+      string sCommon = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+      sCommon = sCommon[..sCommon.LastIndexOf('\\')];
+      sCommon = sCommon[..sCommon.LastIndexOf('\\')];
+      sCommon = sCommon[..(sCommon.LastIndexOf('\\') + 1)];
       return sCommon + "MMCommons";
     }
 
@@ -49,7 +46,8 @@ namespace StaticExtensions {
     public static bool AsBool(this object obj){ return !obj.IsNull() && Convert.ToBoolean(obj); }
     /// <summary> Casts object as string, null is Exception </summary>
     /// <returns> string </returns>
-    public static string AsString(this object obj){ return Convert.ToString(obj); }
+    public static string AsString(this object obj){ 
+      try{ return Convert.ToString(obj) ?? String.Empty; } catch{ return String.Empty; } }
     /// <summary> Casts object as int, null is Exception </summary>
     /// <returns> int </returns>
     public static int AsInt(this object obj){
@@ -69,8 +67,6 @@ namespace StaticExtensions {
     /// <summary> Casts object as decimal, null is Exception </summary>
     /// <returns> decimal </returns>    
     public static decimal AsDecimal(this object obj) { return Convert.ToDecimal(obj); }
-    /// <summary> Casts object as json string via Newtonsoft </summary>
-    /// <returns> string </returns>       
     #endregion
 
     #region Strings
@@ -94,7 +90,7 @@ namespace StaticExtensions {
     /// <returns> string </returns>
     public static string ParseLast(this string content, string delims) {
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-      return split[split.Length-1];
+      return split[^1];
     }
     /// <summary> Splits contents by delims and concats adding concatString in middle in reverse order</summary>
     /// <returns> string </returns>
@@ -102,7 +98,7 @@ namespace StaticExtensions {
       string result = "";
       string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
       for (int i = split.Length - 1; i >= 0; i--) {
-        result += (result == "" ? split[i] : delims + split[i]);
+        result += (result == "" ? split[i] : concatString + split[i]);
       }
       return result;
     }
@@ -117,7 +113,7 @@ namespace StaticExtensions {
     /// <returns> string </returns>
     public static string RemoveChar(this string content, char CToRemove) { 
       string r = content;
-      while (r.IndexOf(CToRemove)>=0) { 
+      while (r.Contains(CToRemove)) { 
         r =  r.Remove(r.IndexOf(CToRemove), 1);  
       }
       return r;
@@ -312,9 +308,9 @@ namespace StaticExtensions {
     /// <summary> Computes hash for file at filePath </summary>
     /// <returns> string Hash </returns>    
     public static string AsMD5HashFile(string filePath) {
-      using (var md5 = MD5.Create())
-      using (var stream = File.OpenRead(filePath))
-        return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+      using var md5 = MD5.Create();
+      using var stream = File.OpenRead(filePath);
+      return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
     }
 
     #endregion
@@ -350,7 +346,8 @@ namespace StaticExtensions {
     /// <returns> none void </returns>    
     public static string WriteToTextFile(this string stringToWrite, string logFileName){
       try {
-        using (StreamWriter w = File.AppendText(logFileName)) { w.Write(stringToWrite); }
+        using StreamWriter w = File.AppendText(logFileName);
+        w.Write(stringToWrite);
       } catch (Exception ee) {
         throw ee.WriteToLogException("");
       }
@@ -360,7 +357,8 @@ namespace StaticExtensions {
     /// <returns> none void </returns>    
     public static string WriteToTextFileLine(this string stringToWrites, string logFileName){
       try {
-        using (StreamWriter w = File.AppendText(logFileName)) { w.WriteLine(stringToWrites); }
+        using StreamWriter w = File.AppendText(logFileName);
+        w.WriteLine(stringToWrites);
       } catch (Exception ee) {
         throw ee.WriteToLogException("");
       }
@@ -379,28 +377,12 @@ namespace StaticExtensions {
     #endregion
 
     #region Images
-    /// <summary> Access to Regex object regex </summary>
-    /// <returns> Regex r </returns>    
-    public static Regex regex = new Regex(":");
-    /// <summary>
-    /// Retrieves the datetime without loading the whole image
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns>DateTime</returns>
-    public static DateTime GetDateTakenFromImage(this string path) {
-      using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-      using (Image myImage = Image.FromStream(fs, false, false)) {
-        PropertyItem propItem = myImage.GetPropertyItem(36867);
-        string dateTaken = regex.Replace(System.Text.Encoding.UTF8.GetString(propItem.Value), "-", 2);
-        return DateTime.Parse(dateTaken);
-      }
-    }
     /// <summary>
     /// GetColors, finds howMany colors inbetween fromColor and toColor 
     /// </summary>
     /// <returns>Array howMany of colors in between fromColor and toColor </returns>
     public static Color[] GetColors(Color fromColor, Color toColor, int howMany) {
-      List<Color> aRet = new List<Color> {fromColor};
+      List<Color> aRet = new() { fromColor};
       if (howMany > 0) {
         int iCount = 0;        
         int sA = (toColor.A - fromColor.A) / (howMany + 1);
