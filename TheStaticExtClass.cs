@@ -33,7 +33,7 @@ namespace StaticExtensions {
     /// <returns> bool </returns>
     public static bool HasConsole() {
       try { return Console.WindowHeight > 0; }
-      catch { return false;}
+      catch { return false; }
     }
     #endregion
 
@@ -43,7 +43,7 @@ namespace StaticExtensions {
     public static bool IsNull(this object obj){ return (obj == null) || Convert.IsDBNull(obj); }
     /// <summary> Casts object as bool, null is false </summary>
     /// <returns> bool </returns>
-    public static bool AsBool(this object obj){ return !obj.IsNull() && Convert.ToBoolean(obj); }
+    public static bool? AsBool(this object obj){ return obj.IsNull() ? null : Convert.ToBoolean(obj); }
     /// <summary> Casts object as string, null is Exception </summary>
     /// <returns> string </returns>
     public static string AsString(this object obj){ 
@@ -55,8 +55,8 @@ namespace StaticExtensions {
     }
     /// <summary> Casts object as long, null is Exception </summary>
     /// <returns> long </returns>
-    public static long AsLong(this object obj) {
-      return long.TryParse(obj.AsString(), out long r) ? r : throw new Exception("failed convert to long "+ obj.AsString());
+    public static long? AsLong(this object obj) {
+      return long.TryParse(obj.AsString(), out long r) ? r : null;
     }
     /// <summary> Casts object as DateTime, null is Exception </summary>
     /// <returns> DateTime </returns>    
