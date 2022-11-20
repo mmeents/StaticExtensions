@@ -8,15 +8,14 @@
     
     #region object exts
 
-    public static bool IsNull(this object obj)
-    public static bool AsBool(this object obj)
-    public static string AsString(this object obj)
-    public static int AsInt(this object obj)
-    public static long AsLong(this object obj)
-    public static DateTime AsDateTime(this object obj)
-    public static Double AsDouble(this object obj)
-    public static Decimal AsDecimal(this object obj)
-    public static string AsJson(this object obj)
+    public static bool IsNull(this object? obj)
+    public static bool? AsBool(this object? obj)
+    public static string? AsString(this object? obj)
+    public static int? AsInt(this object? obj)
+    public static long? AsLong(this object? obj)
+    public static DateTime? AsDateTime(this object? obj)
+    public static Double? AsDouble(this object? obj)
+    public static Decimal? AsDecimal(this object? obj)  
 
     #region Parse strings
     
