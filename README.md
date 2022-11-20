@@ -79,8 +79,7 @@
     public static byte[] AsByteArray(this string hexString)
     public static string AsFiletoMD5(string filePath) 
 
-    #region exceptions
-    
+     
     public static string AsWalkExcTreePath(this Exception e)   
     public static Exception WriteAppLog(this Exception e, string messageString)
     public static void WriteToAppLog(this string messageString)
@@ -88,15 +87,9 @@
     public static string WriteToTextFileLine(this string stringToWrite, string logFileName)
     public static Exception WriteToLogException(this Exception e, string logFileNamePart)
 
-    #region Images
-
-    public static Regex r = new Regex(":");
-    
-    //retrieves the datetime WITHOUT loading the whole image
-    public static DateTime GetDateTakenFromImage(this string path) 
-
+   
     // GetColors by Matt Meents, creates const foreach ARGB and then sum out the colors...
     public static Color[] GetColors(Color fromColor, Color toColor, int howMany)
 
-    #endregion
+  
 ```
