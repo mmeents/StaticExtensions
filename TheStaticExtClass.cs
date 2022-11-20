@@ -13,6 +13,7 @@ namespace StaticExtensions {
   public static class DllExt {
 
     #region Common Locations 
+
     /// <summary> General Location to put program data  </summary>
     /// <remarks> string C:\ProgramData\MMCommons </remarks>
     public static string MMCommonsFolder() { return "C:\\ProgramData\\MMCommons"; }
