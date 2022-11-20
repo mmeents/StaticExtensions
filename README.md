@@ -8,15 +8,14 @@
     
     #region object exts
 
-    public static bool IsNull(this object obj)
-    public static bool AsBool(this object obj)
-    public static string AsString(this object obj)
-    public static int AsInt(this object obj)
-    public static long AsLong(this object obj)
-    public static DateTime AsDateTime(this object obj)
-    public static Double AsDouble(this object obj)
-    public static Decimal AsDecimal(this object obj)
-    public static string AsJson(this object obj)
+    public static bool IsNull(this object? obj)
+    public static bool? AsBool(this object? obj)
+    public static string? AsString(this object? obj)
+    public static int? AsInt(this object? obj)
+    public static long? AsLong(this object? obj)
+    public static DateTime? AsDateTime(this object? obj)
+    public static Double? AsDouble(this object? obj)
+    public static Decimal? AsDecimal(this object? obj)  
 
     #region Parse strings
     
@@ -79,8 +78,7 @@
     public static byte[] AsByteArray(this string hexString)
     public static string AsFiletoMD5(string filePath) 
 
-    #region exceptions
-    
+     
     public static string AsWalkExcTreePath(this Exception e)   
     public static Exception WriteAppLog(this Exception e, string messageString)
     public static void WriteToAppLog(this string messageString)
@@ -88,15 +86,9 @@
     public static string WriteToTextFileLine(this string stringToWrite, string logFileName)
     public static Exception WriteToLogException(this Exception e, string logFileNamePart)
 
-    #region Images
-
-    public static Regex r = new Regex(":");
-    
-    //retrieves the datetime WITHOUT loading the whole image
-    public static DateTime GetDateTakenFromImage(this string path) 
-
+   
     // GetColors by Matt Meents, creates const foreach ARGB and then sum out the colors...
     public static Color[] GetColors(Color fromColor, Color toColor, int howMany)
 
-    #endregion
+  
 ```

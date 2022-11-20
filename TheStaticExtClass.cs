@@ -32,40 +32,40 @@ namespace StaticExtensions {
     /// <returns> bool </returns>
     public static bool HasConsole() {
       try { return Console.WindowHeight > 0; }
-      catch { return false;}
+      catch { return false; }
     }
     #endregion
 
     #region object exts
     /// <summary> Check object is null </summary>
     /// <returns> bool </returns>
-    public static bool IsNull(this object obj){ return (obj == null) || Convert.IsDBNull(obj); }
+    public static bool IsNull(this object? obj){ return (obj == null) || Convert.IsDBNull(obj); }
     /// <summary> Casts object as bool, null is false </summary>
     /// <returns> bool </returns>
-    public static bool AsBool(this object obj){ return !obj.IsNull() && Convert.ToBoolean(obj); }
+    public static bool? AsBool(this object? obj){ return obj.IsNull() ? null : Convert.ToBoolean(obj); }
     /// <summary> Casts object as string, null is Exception </summary>
     /// <returns> string </returns>
-    public static string AsString(this object obj){ 
+    public static string AsString(this object? obj){ 
       try{ return Convert.ToString(obj) ?? String.Empty; } catch{ return String.Empty; } }
     /// <summary> Casts object as int, null is Exception </summary>
     /// <returns> int </returns>
-    public static int AsInt(this object obj){
-      return int.TryParse(obj.AsString(), out int r) ? r : throw new Exception("failed convert to int " + obj.AsString());
+    public static int? AsInt(this object? obj){
+      return int.TryParse(obj.AsString(), out int r) ? r : null;
     }
     /// <summary> Casts object as long, null is Exception </summary>
     /// <returns> long </returns>
-    public static long AsLong(this object obj) {
-      return long.TryParse(obj.AsString(), out long r) ? r : throw new Exception("failed convert to long "+ obj.AsString());
+    public static long? AsLong(this object? obj) {
+      return long.TryParse(obj.AsString(), out long r) ? r : null;
     }
     /// <summary> Casts object as DateTime, null is Exception </summary>
     /// <returns> DateTime </returns>    
-    public static DateTime AsDateTime(this object obj) { return Convert.ToDateTime(obj); }
+    public static DateTime? AsDateTime(this object? obj) { return obj == null ? null : Convert.ToDateTime(obj); }
     /// <summary> Casts object as double, null is Exception </summary>
     /// <returns> double </returns>    
-    public static double AsDouble(this object obj) { return Convert.ToDouble(obj); }
+    public static double? AsDouble(this object? obj) { return obj == null ? null : Convert.ToDouble(obj); }
     /// <summary> Casts object as decimal, null is Exception </summary>
     /// <returns> decimal </returns>    
-    public static decimal AsDecimal(this object obj) { return Convert.ToDecimal(obj); }
+    public static decimal? AsDecimal(this object? obj) { return obj == null ? null : Convert.ToDecimal(obj); }
     #endregion
 
     #region Strings
