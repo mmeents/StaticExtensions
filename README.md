@@ -1,5 +1,5 @@
 # StaticExtensions
-- Extensions for all
+- Extensions for all  [On Nuget](https://www.nuget.org/packages/StaticExtensions/)
 ```c#
 
     public static string MMCommonsFolder() { return "C:\\ProgramData\\MMCommons"; }
