@@ -6,7 +6,7 @@
     public static string AppExeFolder(){ return MMConLocation() + "\\"; }
     public static string MMConLocation()  -- wrapper around Application.CommonAppDataPath backing up and adding "MMCommons";
     
-    #region object exts
+    //#region object exts
 
     public static bool IsNull(this object? obj)
     public static bool? AsBool(this object? obj)
@@ -17,7 +17,7 @@
     public static Double? AsDouble(this object? obj)
     public static Decimal? AsDecimal(this object? obj)  
 
-    #region Parse strings
+    //#region Parse strings
     
     public static int ParseCount(this string content, string delims)
     public static string ParseString(this string content, string delims, int take)
@@ -31,8 +31,10 @@
 
     public static decimal AsDecimal(this string obj)
     public static string LTrim(this string content, char c) 
-
-    #region Date to string with popular time formats. 
+    public static string AsUpperCaseFirstLetter(this string content) 
+    public static string AsLowerCaseFirstLetter(this string content) 
+    
+    //#region Date to string with popular time formats. 
     
     public static string AsStrDate(this DateTime x)
     public static string AsStrDateTime12H(this DateTime x)
@@ -41,7 +43,7 @@
     public static string AsStrDateHHMM(this DateTime x)
     public static string AsStrDay(this DateTime x)
 
-    #region Double
+    //#region Double
 
     public static Int32 AsInt32(this double x)
     public static Int32 AsInt32T(this double x)
@@ -55,7 +57,7 @@
     public static double AsPointsVertical(this double dIn)
     public static double AsPointsHorizontal(this double dIn)
 
-    #region Decimal
+    //#region Decimal
     
     public static float AsFloat(this decimal x) 
     public static int AsInt(this decimal x)
@@ -68,7 +70,7 @@
     public static string AsStr8P(this decimal x, Int32 toHowManyPlaces, char paddingChar = ' ')
     public static double AsDouble(this decimal x)
 
-    #region cryptish masks 
+    //#region cryptish masks 
     
     // variant uses ? as fillers instead of = for base64 in inifiles.
     public static string AsBase64Encoded(this string Text)
