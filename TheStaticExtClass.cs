@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System;
+using Newtonsoft.Json;
 
 namespace StaticExtensions {
 
@@ -144,6 +145,27 @@ namespace StaticExtensions {
     public static string AsLowerCaseFirstLetter(this string content) {
       return string.Concat(content[..1].ToLower(), content.AsSpan(1));
     }
+    /// <summary> Newtonsoft.Json JsonConvert.SerializeObject(obj) route. </summary>
+    /// <param name="obj"></param>
+    /// <returns> null or Json string of object</returns>
+    public static string? AsJsonString(this object obj) {
+      if (obj.IsNull()) { 
+        return null;
+      } else { 
+        return JsonConvert.SerializeObject(obj);
+      }
+    }
+    /// <summary> Newtonsoft.Json JsonConvert.DeserializeObject(obj) route. </summary>
+    /// <param name="jsonString"></param>
+    /// <returns>null or Object from DeserializeObject</returns>
+    public static object? AsFromJsonString(this string? jsonString) { 
+      if (jsonString==null) {
+        return null;
+      } else { 
+        return JsonConvert.DeserializeObject(jsonString);
+      }
+    }
+
 
     #endregion
 
