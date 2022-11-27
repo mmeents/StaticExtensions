@@ -33,6 +33,8 @@
     public static string LTrim(this string content, char c) 
     public static string AsUpperCaseFirstLetter(this string content) 
     public static string AsLowerCaseFirstLetter(this string content) 
+    public static string? AsJsonString(this object obj)
+    public static object? AsFromJsonString(this string? jsonString)
     
     //#region Date to string with popular time formats. 
     
