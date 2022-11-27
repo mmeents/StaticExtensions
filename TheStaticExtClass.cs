@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System;
 
 namespace StaticExtensions {
 
@@ -130,6 +131,18 @@ namespace StaticExtensions {
         r = r.Remove(0,1); 
       }
       return r;
+    }
+    /// <summary> Uppercase first letter of content concat with rest of content. </summary>
+    /// <param name="content"></param>
+    /// <returns> string </returns>
+    public static string AsUpperCaseFirstLetter(this string content) {
+      return string.Concat(content[..1].ToUpper(), content.AsSpan(1));
+    }
+    /// <summary> lower case first letter of content concat with remainder. </summary>
+    /// <param name="content"></param>
+    /// <returns> string </returns>
+    public static string AsLowerCaseFirstLetter(this string content) {
+      return string.Concat(content[..1].ToLower(), content.AsSpan(1));
     }
 
     #endregion
