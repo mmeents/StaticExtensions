@@ -15,7 +15,7 @@
     <GenerateAssemblyFileVersionAttribute>False</GenerateAssemblyFileVersionAttribute>
     <GenerateAssemblyInformationalVersionAttribute>False</GenerateAssemblyInformationalVersionAttribute>
     <GenerateAssemblyVersionAttribute>False</GenerateAssemblyVersionAttribute>
-    <Version>2.0.2</Version>
+    <Version>2.0.3</Version>
     <AssemblyVersion>2.0.2.0</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <PackageIcon>flame.png</PackageIcon>

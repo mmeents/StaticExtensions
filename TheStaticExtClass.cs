@@ -74,30 +74,34 @@ namespace StaticExtensions {
     /// <summary> Splits content by delims and count</summary>
     /// <returns> int </returns>    
     public static int ParseCount(this string content, string delims){
-      return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Length;
+      return content.Parse(delims).Length;
     }
     /// <summary> Splits contents by delims into an array and returns item at take </summary>
     /// <returns> string </returns>
     public static string ParseString(this string content, string delims, int take){
-      string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+      string[] split = content.Parse(delims);
       return take >= split.Length ? "" : split[take];
     }
     /// <summary> Splits contents by delims and takes first</summary>
     /// <returns> string </returns>
     public static string ParseFirst(this string content, string delims) {
-      return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0];
+      return content.Parse(delims)[0];
     }
     /// <summary> Splits contents by delims and takes last</summary>
     /// <returns> string </returns>
     public static string ParseLast(this string content, string delims) {
-      string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-      return split[^1];
+      return content.Parse(delims)[^1];      
     }
+    /// <summary> Pasrse String by delim characters return the array result. </summary>    
+    /// <returns> string array </returns>
+    public static string[] Parse(this string content, string delims) {       
+      return content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+     }
     /// <summary> Splits contents by delims and concats adding concatString in middle in reverse order</summary>
     /// <returns> string </returns>
     public static string ParseReverse(this string content, string delims, string concatString) {
       string result = "";
-      string[] split = content.Split(delims.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+      string[] split = content.Parse(delims);
       for (int i = split.Length - 1; i >= 0; i--) {
         result += (result == "" ? split[i] : concatString + split[i]);
       }
